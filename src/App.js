@@ -54,6 +54,10 @@ function App() {
     const foundPos = movieContactsCopy.findIndex(
       (contact) => contact.id === passedId
     );
+
+    console.log("click");
+    console.log(passedId);
+
     // const foundPos = () => {
     //   for (let i = 0; i < movieContactsCopy.length-1; i++) {
     //     if (movieContactsCopy[i].id === passedId) {
@@ -61,9 +65,25 @@ function App() {
     //     }
     //   }
     // };
+
     movieContactsCopy.splice(foundPos, 1);
     setMovieContacts(movieContactsCopy);
   };
+
+  const listItem = movieContacts.map((contact) => (
+    <tr key={contact.id}>
+      <th>
+        <img className="icon-img" src={contact.pictureUrl} alt="" />
+      </th>
+      <th>{contact.name}</th>
+      <th>{contact.popularity}</th>
+      {contact.wonEmmy ? <th>🏆</th> : <th></th>}
+      {contact.wonOscar ? <th>🏆</th> : <th></th>}
+      <th>
+        <button onClick={() => deleteContact(contact.id)}>Delete</button>
+      </th>
+    </tr>
+  ));
 
   return (
     <div className="App">
@@ -88,24 +108,7 @@ function App() {
             <th>Deletion</th>
           </tr>
         </thead>
-        <tbody>
-          {movieContacts.map((contact) => {
-            return (
-              <tr key={contact.id}>
-                <th>
-                  <img className="icon-img" src={contact.pictureUrl} alt="" />
-                </th>
-                <th>{contact.name}</th>
-                <th>{contact.popularity}</th>
-                {contact.wonEmmy ? <th>🏆</th> : <th></th>}
-                {contact.wonOscar ? <th>🏆</th> : <th></th>}
-                <th>
-                  <button onClick={()=>deleteContact(contact.id)}>Delete</button>
-                </th>
-              </tr>
-            );
-          })}
-        </tbody>
+        <tbody>{listItem}</tbody>
       </table>
     </div>
   );
